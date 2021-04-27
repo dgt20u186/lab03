@@ -44,6 +44,7 @@
   
 **Задание 2.**
   У компании "Formatter Inc." есть перспективная библиотека, которая является расширением предыдущей библиотеки. Т.к. вы уже овладели навыком созданием ```CMakeList.txt``` для статической библиотеки *formatter*, ваш руководитель поручает заняться созданием ```CMakeList.txt``` для библиотеки *formatter_ex*, которая в свою очередь использует библиотеку *formatter*.
+  
   Командa 1: ```cp -r formatter_lib formatter_ex_lib/```
   
   Командa 2:
@@ -80,6 +81,22 @@
     
      Команда 3: ```$ cmake ~/dgt20u186/workspace/tasks/lab03/hello_world_application```
      
+     Вывод 3:
+     ```
+     -- Configuring done
+     -- Generating done
+     -- Build files have been written to: /home/dgt20u186/dgt20u186/workspace/tasks/lab03/hello_world_application
+     ```
+     Команда 4: ```make```
+     
+     Вывод 4:
+     ```
+     Scanning dependencies of target hello_world
+     [ 83%] Building CXX object CMakeFiles/hello_world.dir/hello_world.cpp.o
+     [100%] Linking CXX executable hello_world
+     [100%] Built target hello_world
+     ```
+     
   2. Команда 1:  
      ```
      $ cat > CMakeLists.txt <<EOF
@@ -96,5 +113,34 @@
      -- Generating done
      -- Build files have been written to: /home/dgt20u186/dgt20u186/workspace/tasks/lab03/solver_lib
      ```
+     
+     Команда 3: ```make```
+     
+     Команда 4: ```$ mv solver_lib/ formatter_ex_lib/```
+     
+     Команда 5:
+     ```
+     $ cat > CMakeLists.txt <<EOF
+     > cmake_minimum_required(VERSION 3.4)
+     > project(solver)
+     > add_executable(solver equation.cpp)
+     > include_directories(formatter_ex_lib)
+     > add_subdirectory(formatter_ex_lib)
+     > include_directories(solver_lib)
+     > add_subdirectory(solver_lib)
+     > target_link_libraries(solver formatter_ex)
+     > target_link_libraries(solver solver_lib)
+     > EOF
+     ```
+     
+     Команда 6: ```$ cmake ~/dgt20u186/workspace/tasks/lab03/solver_application```
+     
+     Вывод 6:
+     ```
+     -- The C compiler identification is GNU 9.3.0
+     -- The CXX compiler identification is GNU 9.3.0
+     -- Check for working C compiler: /usr/bin/cc
+     ```
+     
      
      
